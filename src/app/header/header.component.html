@@ -1,0 +1,60 @@
+<div class="header-navigation">
+  <div>
+    <a href="https://github.com/dafneolca/dashboard-dmb" target="_blank">
+      <img class="dashboard_logo" src="../../assets/images/dashboard_logo.png" alt="dashboard_logo" />
+    </a>
+  </div>
+
+  <!-- DESKTOP NAVBAR -->
+  <div class="full-display-screen">
+    <nav class="nav-bar-items">
+      <ul>
+        <li>
+          <a routerLink="/admin">Admin</a>
+        </li>
+        <li>
+          <a routerLink="/status">Status</a>
+        </li>
+        <li *ngIf="loggedIn">
+          <a routerLink="/" (click)="removeDataFromLocalStorage()">Logout</a>
+        </li>
+        <li *ngIf="!loggedIn">
+          <a routerLink="/" (click)="login()">Login</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+
+  <!-- MOBILE NAVBAR -->
+  <nav class="navbar-mobile">
+
+    <div class="menu-icon" style="color:white" (click)="toggleMenuView()">
+      <i class="fas fa-bars" style="color:white"></i>
+      <p>Click Me</p>
+    </div>
+
+
+    <span style="font-size: 3em; color: Tomato;">
+      <i class="fas fa-camera"></i>
+    </span>
+
+
+    <ul *ngIf="displayNav">
+      <li>
+        <a routerLink="/admin">Admin</a>
+      </li>
+      <li>
+        <a routerLink="/status">Status</a>
+      </li>
+      <li *ngIf="loggedIn">
+        <a routerLink="/" (click)="removeDataFromLocalStorage()">Logout</a>
+      </li>
+      <li *ngIf="!loggedIn">
+        <a routerLink="/" (click)="login()">Login</a>
+      </li>
+    </ul>
+
+    <!-- </div> -->
+  </nav>
+</div>
