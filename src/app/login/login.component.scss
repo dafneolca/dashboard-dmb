@@ -4,7 +4,7 @@
 }
 
 .main-container {
-  height: 600px;
+  height: 450px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,9 +15,22 @@
   margin: 15px;
 }
 
-.footer-text {
-  position: absolute;
-  top: 360px;
+.input-fields {
+  display: flex;
+}
+
+input {
+  padding: 0 10px;
+  background: #ececec;
+  border: 1px solid #ececec;
+  height: 30px;
+  color: #333;
+  font-size: 14px;
+  line-height: 24px;
+  display: inline-block;
+  width: auto;
+  vertical-align: middle;
+  margin: 0 5px;
 }
 
 .option-dropdown {
@@ -45,14 +58,28 @@
   color: #3179ac;
 }
 
-.drop-down .selected a span {
-  cursor: pointer;
-  display: block;
-  padding: 5px;
+.dropdown-list {
+  position: absolute;
 }
 
-.drop-down .option {
-  position: relative;
+ul {
+  list-style: none;
+}
+
+li {
+  width: 175px;
+  // color: darkgray;
+  background-color: lightgray;
+  padding: 10px 0 10px 10px;
+  cursor: pointer;
+}
+
+li:hover {
+  width: 175px;
+  // color: darkgray;
+  background-color: darkgray;
+  padding: 10px 0 10px 10px;
+  cursor: pointer;
 }
 
 .drop-down .options ul {
@@ -86,13 +113,30 @@
   transition: 0.2s ease;
 }
 
-// EXPERIMENTING ABOVE HERE
+.btn-submit-new-id {
+  background-color: #00adef;
+  border: 1px solid #00adef;
+  color: #fff;
+  margin: 20px;
+  cursor: pointer;
+  border-radius: 100px;
+  padding: 3px 8px;
+  height: 35px;
+  width: 100px;
+  font-size: 15px;
+}
 
-
+.btn-submit-new-id:hover {
+  background-color: #009bd6;
+  border: 1px solid #009bd6;
+}
 
 .headline-and-copy {
-  // padding-top: 0;
   position: absolute;
+
+  h1 {
+    text-align: center;
+  }
 }
 
 .input-window {
@@ -104,9 +148,7 @@
 
 
 // IMPORTING STYLES FROM HERE
-.wb-e-dropd-1__btn-wrapper,
-.wb-e-dropd-2__btn-wrapper,
-.wb-e-dropd-3__btn-wrapper {
+.wb-e-dropd-1__btn-wrapper {
   position: relative;
 }
 
@@ -128,20 +170,9 @@
   width: 100%;
 }
 
-.wb-e-dropd-1__default-text,
-.wb-e-dropd-2__default-text,
-.wb-e-dropd-3__default-text {
-  display: none;
-}
-
 
 @media (max-width: 479px) {
 
-  .wb-e-dropd-1--expanded .wb-e-dropd-1__list {
-    display: block;
-    width: 85.333vw !important;
-    left: 7.467vw;
-  }
 
   .wb-e-dropd-1__item {
     width: 85.333vw !important;
@@ -195,12 +226,6 @@
     margin: 15px;
   }
 
-  .footer-text {
-    position: inherit;
-    top: inherit;
-    padding: 0;
-  }
-
   input {
     width: 85.333vw !important;
     margin-bottom: 15px;
@@ -217,11 +242,7 @@
 }
 
 @media (min-width: 480px) and (max-width: 769px) {
-  .wb-e-dropd-1--expanded .wb-e-dropd-1__list {
-    display: block;
-    width: 50vw !important;
-    left: 24.9vw;
-  }
+
 
   .wb-e-dropd-1__item {
     width: 50vw !important;

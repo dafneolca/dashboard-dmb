@@ -1,6 +1,6 @@
-<div class="container-outer background-white align-left variant-no-spacing main-container">
-  <div class=" headline-and-copy align-center">
-    <h1 class="wb-e-hdl-23">
+<div class="main-container">
+  <div class="headline-and-copy">
+    <h1>
       Welcome to the Dashboard
     </h1>
 
@@ -9,91 +9,47 @@
       Enter your App ID, API Key and chose an environment, to continue.
     </p>
 
-    <form>
-      <div class="input-window" (keyup.enter)="onEnter($event, user.value, key.value)">
-        <input type="text" class="form-control brandhub-search__input" placeholder="App ID" #user
-          style="padding: 0 10px;">
-        <span style="width: 10px"></span>
-        <input type="text" class="form-control brandhub-search__input" placeholder="API Key" #key
-          style="padding: 0 10px; width: 320px">
-        <span style="width: 10px"></span>
-        <div class="wb-e-dropd-1__btn-wrapper wb-e-dropd-1--expanded">
-          <button class="wb-e-dropd-1__btn dropdown-btn" type="button" tabindex="-1" (click)="toggleDropDown()"
-            style="width: 185px; height: 40px; padding: 11px 40px 11px 14px">
-            {{env}}
-            <svg *ngIf="!showDropDown" class="wb-e-dropd-1__btn-icon" aria-hidden="true" viewBox="0 0 33.5 19.992"
-              style="right: 12px;  transform: none">
-              <style type="text/css">
-                .st0 {
-                  fill: #FFFFFF;
-                }
+    <form (ngSubmit)="login(loginData.value)" #loginData="ngForm" novalidate>
+      <div class="input-fields">
+        <input name="username" class="app-id-input" ngModel type="text" placeholder="Username" required
+          #username="ngModel" />
+        <span *ngIf="username.errors" style="color: #9f0002">*</span>
+        <br>
+        <input name="password" class="app-id-input" ngModel type="text" placeholder="Password" required
+          #password="ngModel" />
+        <span *ngIf="password.errors" style="color: #9f0002">*</span>
 
-              </style>
-              <g id="icon-16__arrow-down--default-Ebene_38">
-                <g>
-                  <polygon points="33.5,0 33.5,5.223 16.63,19.992 0,5.343 0,0.12 16.63,13.028"></polygon>
-                </g>
-              </g>
-            </svg>
-
-            <svg *ngIf="showDropDown" class="wb-e-dropd-1__btn-icon" aria-hidden="true" viewBox="0 0 33.5 19.992"
-              style="right: 12px">
-              <style type="text/css">
-                .st0 {
-                  fill: #FFFFFF;
-                }
-
-              </style>
-              <g id="icon-16__arrow-down--default-Ebene_38">
-                <g>
-                  <polygon points="33.5,0 33.5,5.223 16.63,19.992 0,5.343 0,0.12 16.63,13.028"></polygon>
-                </g>
-              </g>
-            </svg>
-          </button>
-          <div class="dropdown-list-div-mobile">
-            <ul class="wb-e-dropd-1__list" *ngIf="showDropDown" #env>
-              <li style="width: 185px; height: 40px; padding: 11px 40px 11px 14px; text-align:left"
-                class="wb-e-dropd-1__item" (click)="thisValue(dev)">
-                Development</li>
-              <li style="width: 185px; height: 40px; padding: 11px 40px 11px 14px; text-align:left"
-                class="wb-e-dropd-1__item" (click)="thisValue(int)">
-                Integration</li>
-              <li style="width: 185px; height: 40px; padding: 11px 40px 11px 14px; text-align:left"
-                class="wb-e-dropd-1__item" (click)="thisValue(prod)">
-                Production</li>
-            </ul>
-          </div>
+        <div *ngIf=" ( username.errors && (username.dirty || username.touched) || password.errors &&
+            (password.dirty || password.touched) )">
+          <span *ngIf="!username.errors|| !password.errors" style="color: #9f0002; position: absolute">
+            *Required Fields
+          </span>
         </div>
 
-        <select class="wb-e-dropd-1__select" id="we-e-dropd-1-id-1">
-          <option selected="selected" class="wb-e-dropd-1__default-text">{{env}}</option>
-          <option class="option-dropdown" #dev value="Development">Development</option>
-          <option #int value="Integration">Integration</option>
-          <option #prod value="Production">Production</option>
-        </select>
-      </div>
+        <div class="wb-e-dropd-1__btn-wrapper wb-e-dropd-1--expanded">
+          <button class="wb-e-dropd-1__btn dropdown-btn" type="button" tabindex="-1" (click)="toggleDropDown()">
+            {{environment}}
+          </button>
 
-      <div class="continue-button" style="display:flex; padding:5px; justify-content: center">
-        <button type="button" class="wb-e-btn-1 [modifier class]"
-          style="margin-top:0; width: 100px; flex-direction: row" (click)="signIn(user.value, key.value)">
-          <p>
-            <svg class="wb-e-btn-1__icon" aria-hidden="true" viewBox="0 0 20 33.5">
-              <style type="text/css">
-                .st0 {
-                  fill: #333333;
-                }
+          <div class="dropdown-list-div-mobile">
+            <ul class="dropdown-list" *ngIf="showDropDown">
+              <li (click)="thisValue('dev')">
+                Development</li>
+              <li (click)="thisValue('int')">
+                Integration</li>
+              <li (click)="thisValue('prod')">
+                Production</li>
+            </ul>
 
-              </style>
-              <g id="icon-4__arrow--default-Ebene_39">
-                <g>
-                  <polygon points="0,0 5.163,0 19.992,16.81 5.343,33.5 0.12,33.5 12.968,16.81"></polygon>
-                </g>
-              </g>
-            </svg>
-            Continue</p>
-        </button>
+            <select style="display:none" name="env" ngModel #env="ngModel">
+              <option class="option-dropdown" #dev value="Development">Development</option>
+              <option #int value="Integration">Integration</option>
+              <option #prod value="Production">Production</option>
+            </select>
+          </div>
+        </div>
       </div>
+      <button type="submit" class="btn-submit-new-id">Submit</button>
     </form>
 
     <p *ngIf="adminRights===false" class="wb-e-errms-1">
