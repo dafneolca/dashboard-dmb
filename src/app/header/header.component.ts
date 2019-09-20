@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'header',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+
+  faBars = faBars;
 
   loggedIn: boolean;
 
@@ -21,13 +24,6 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleMenuView() {
-    console.log("click")
-    // if (this.viewMenuInMobile) {
-    //   this.viewMenuInMobile = false;
-    // }
-    // else {
-    //   this.viewMenuInMobile = true;
-    // }
     this.displayNav = !this.displayNav;
   }
 

@@ -28,33 +28,24 @@
 
   <!-- MOBILE NAVBAR -->
   <nav class="navbar-mobile">
-
-    <div class="menu-icon" style="color:white" (click)="toggleMenuView()">
-      <i class="fas fa-bars" style="color:white"></i>
-      <p>Click Me</p>
+    <div class="menu-icon" (click)="toggleMenuView()">
+      <fa-icon [icon]="faBars"></fa-icon>
     </div>
-
-
-    <span style="font-size: 3em; color: Tomato;">
-      <i class="fas fa-camera"></i>
-    </span>
-
-
-    <ul *ngIf="displayNav">
-      <li>
-        <a routerLink="/admin">Admin</a>
-      </li>
-      <li>
-        <a routerLink="/status">Status</a>
-      </li>
-      <li *ngIf="loggedIn">
-        <a routerLink="/" (click)="removeDataFromLocalStorage()">Logout</a>
-      </li>
-      <li *ngIf="!loggedIn">
-        <a routerLink="/" (click)="login()">Login</a>
-      </li>
-    </ul>
-
-    <!-- </div> -->
+    <div *ngIf="displayNav" class="dropdown-menu">
+      <ul>
+        <li>
+          <a routerLink="/admin">Admin</a>
+        </li>
+        <li>
+          <a routerLink="/status">Status</a>
+        </li>
+        <li *ngIf="loggedIn">
+          <a routerLink="/" (click)="removeDataFromLocalStorage()">Logout</a>
+        </li>
+        <li *ngIf="!loggedIn">
+          <a routerLink="/" (click)="login()">Login</a>
+        </li>
+      </ul>
+    </div>
   </nav>
 </div>
