@@ -1,0 +1,275 @@
+<header></header>
+<div style="background-color:white; height: 1000px">
+
+  <div *ngIf="spinnerVisibility" class="loading"></div>
+
+  <div class="search-container">
+    <input class="search-bar" placeholder="Find User" [(ngModel)]="searchInput">
+    <fa-icon class="search-icon" [icon]="faSearch"></fa-icon>
+    <button class="btn-clear-search" (click)="onClear()">Clear</button>
+  </div>
+
+
+  <div class="container-outer background-white align-left variant-no-spacing" style="min-height: 600px;">
+    <div class="headline-and-copy align-left">
+      <div class="container" *ngIf="hasAdminRights">
+        <div class="welcome-text">
+          <h1 class="wb-e-hdl-23" style="text-align: center">
+            Hello, {{currentUser | titlecase}}!
+          </h1>
+        </div>
+
+        <div class="main-content-table">
+          <div class="button-container">
+            <button type="button" class="new-id-button" (click)="addNewKeyDisplay()">
+              <fa-icon [icon]="faChevronRight"></fa-icon>
+              Add User
+            </button>
+          </div>
+          <div class="data-table" style="display: flex; justify-content: center">
+            <!-- TABLE HEADERS -->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" style="display:flex; justify-content: space-between; overflow:visible"
+                    class="table-head">
+                    <span>User</span>
+                    <span class="seeDetailHeading" style="visibility:hidden">Show IDs</span>
+                    <span>Delete</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <!-- NEW ROW DISPLAED IF NEW ID IS ADDED -->
+                <tr class="table-rows-body" *ngIf="displayAPIInput" class="APIInputRow"
+                  style="border-bottom:1px solid #cccccc; border-radius:0.5pxx">
+                  <td style="margin-right: 230px; padding: 20px">
+
+                    <form (ngSubmit)="submitNewAPI(newAPI)" #newAPI="ngForm" novalidate>
+                      <input name="apiKey" class="app-id-input" ngModel style="width:516px" type="text"
+                        placeholder="Name" required #newAPIKey="ngModel" />
+                      <span *ngIf="newAPIKey.errors" style="color: #9f0002">*</span>
+                      <br>
+                      <input name="name" class="app-id-input" ngModel type="text" placeholder="Username" required
+                        #newAPIUser="ngModel" />
+                      <span *ngIf="newAPIUser.errors" style="color: #9f0002">*</span>
+                      <input name="email" class="app-id-input" ngModel type="email" placeholder="Email" required
+                        #newAPIEmail="ngModel" />
+                      <span *ngIf="newAPIEmail.errors" style="color: #9f0002">*</span>
+                      <br>
+                      <input id="validUntil" name="validUntil" [(ngModel)]="validUntil" type="text" bsDatepicker
+                        [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" class="form-control" />
+                      <div *ngIf=" ( newAPIKey.errors && (newAPIKey.dirty || newAPIKey.touched) || newAPIUser.errors &&
+                              (newAPIUser.dirty || newAPIUser.touched) || newAPIEmail.errors && (newAPIEmail.dirty ||
+                              newAPIEmail.touched) )">
+                        <span *ngIf="!newAPIKey.errors|| !newAPIUser.errors || newAPIEmail" style="color: #9f0002">
+                          *Required Fields
+                        </span>
+                      </div>
+                      <div class="app-id-buttons">
+                        <button type="submit" class="btn-submit-new-id">Submit</button>
+                        <button (click)="onCancel()" style="margin-left:10px;" class=" cancel-button">Cancel</button>
+                      </div>
+                    </form>
+                  </td>
+                </tr>
+
+                <tr class="table-rows-body" *ngFor="let data of users.slice().reverse() |  userFilter: searchInput"
+                  #currentAPIKey>
+                  <td>
+                    <mat-accordion multi="false">
+                      <mat-expansion-panel
+                        style="background-color: #f1f1f1;border-bottom:1px solid #cccccc; border-radius:0.5px">
+                        <mat-expansion-panel-header class="expansion-class"
+                          style="display: flex; justify-content: space-between; background-color:white; border-bottom:1px solid #cccccc; border-radius:0.5px">
+                          <div class="extra">
+                            <span #currentAPIKey class="apiKey" style="font-size: 15px; text-align: left; width: 820px">
+                              {{data.name}}
+                              <br><br>
+                              {{data.username}}
+                              <span style="width:40px; padding:0px 20px;">|</span>
+                              {{data.email}}
+                              <span style="width:40px; padding:0px 2  0px;">|</span>
+                              <!-- {{data.validUntil}} -->
+                            </span>
+                            <span class="delete-button" data-toggle="tooltip" data-placement="top" title="Delete">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 59.4 67.1"
+                                style="height: 18px; opacity: 0.5; cursor: pointer;"
+                                (click)="openDeleteKeyModal(modalContent, data.apiKey)">
+                                <path
+                                  d="M6.9 67.1L3.2 16.8H0V8.5h19.3L20.6 0h18.2l1.3 8.5h19.3v8.4h-3.2l-3.7 50.2H6.9zm37.8-8.4l3.1-41.8H11.6l3.1 41.8h30zM26.5 23.1v29.6h-5.6V23.1h5.6zm12.4 0v29.6h-5.6V23.1h5.6z"
+                                  fill="#333" />
+                              </svg>
+                            </span>
+                          </div>
+                        </mat-expansion-panel-header>
+
+                        <!-- APP IDs DISPLAY -->
+                        <div style="padding:0">
+                <tr style="padding: 20px 10px 0;">
+                  <td colspan="2" style="padding:10px 0">
+                    <p class="api-row" style="width: 565px">{{data.address.street}}, {{data.address.suite}} </p>
+                    <p class="api-row" style="width: 565px">{{data.address.city}}, {{data.address.zipcode }} </p>
+                  </td>
+                </tr>
+          </div>
+
+          </mat-expansion-panel>
+          </mat-accordion>
+          </td>
+          </tr>
+
+          <!-- ACCORDION WITH DETAILED INFORMATION -->
+          </tbody>
+          </table>
+        </div>
+
+        <div *ngIf="(allData | userFilter: searchInput ).length === 0 && searchInput" class="no-results-msg">
+          <p>No search results for key: {{searchInput}}</p>
+        </div>
+
+
+        <!-- TODO: ADD PAGINATION -->
+        <div style="text-align: center;" class="pagination-div">
+          <!-- <pagination-controls class="pagination" (pageChange)="p = $event" previousLabel="" nextLabel=""
+            autoHide="true" directionLinks="true" style="margin-top: 40px; padding-left:0;">
+          </pagination-controls> -->
+        </div>
+
+        <!-- -------------------------------------- MODAL -------------------------------------->
+        <!-- Modal Delete App -->
+        <ng-template #modalContent let-modal class="delete-app-modal">
+          <div class="wb-m-lightbox-2__body">
+            <button type="button" class="wb-m-lightbox-2__close" (click)="modal.dismiss('Cross click')">
+              <svg class="wb-e-btn-12__icon wb-m-lightbox-2__close-icon" aria-hidden="true" viewBox="0 0 15.001 14.898">
+                <style type="text/css">
+                  .st0 {
+                    fill: #333333;
+                  }
+
+                </style>
+                <g id="icon-12__close--default-Ebene_31">
+                  <g>
+                    <polygon points="14.949,13.326 13.403,14.898 7.5,9.33 1.624,14.898 0.052,13.326 5.645,7.475 0,1.598 1.572,0 
+      7.5,5.619 13.429,0 15.001,1.598 9.356,7.475"></polygon>
+                  </g>
+                </g>
+              </svg>
+            </button>
+            <h2 class="wb-m-lightbox-2__header wb-e-hdl-15">Warning</h2>
+            <p class="wb-e-pgph-2" style="text-align: center">Are you sure you want to delete API
+              Key:<br><span>{{id}}?</span></p>
+
+            <!-- CANCEL BUTTON -->
+            <div style="display:flex; justify-content: center">
+              <button type="button" class="wb-e-btn-2 modal-button" (click)="modal.dismiss('Cross click')">
+                <svg class="wb-e-btn-2__icon" aria-hidden="true" viewBox="0 0 20 33.5">
+                  <style type="text/css">
+                    .st0 {
+                      fill: #333333;
+                    }
+
+                  </style>
+                  <g id="icon-4__arrow--default-Ebene_39">
+                    <g>
+                      <polygon points="0,0 5.163,0 19.992,16.81 5.343,33.5 0.12,33.5 12.968,16.81"></polygon>
+                    </g>
+                  </g>
+                </svg>
+                Cancel
+              </button>
+
+              <!-- DELETE BUTTON -->
+              <button type="button" class="wb-e-btn-1 modal-button"
+                (click)="deleteAPIKey(id ); modal.dismiss('Cross click')">
+                <svg class="wb-e-btn-1__icon" aria-hidden="true" viewBox="0 0 20 33.5">
+                  <style type="text/css">
+                    .st0 {
+                      fill: #333333;
+                    }
+
+                  </style>
+                  <g id="icon-4__arrow--default-Ebene_39">
+                    <g>
+                      <polygon points="0,0 5.163,0 19.992,16.81 5.343,33.5 0.12,33.5 12.968,16.81"></polygon>
+                    </g>
+                  </g>
+                </svg>
+                Delete
+              </button>
+            </div>
+          </div>
+        </ng-template>
+
+        <!-- Modal Delete App ID -->
+        <ng-template #modalContentAPIKey let-modal>
+          <div class="wb-m-lightbox-2__body">
+            <button type="button" class="wb-m-lightbox-2__close" (click)="modal.dismiss('Cross click')">
+              <svg class="wb-e-btn-12__icon wb-m-lightbox-2__close-icon" aria-hidden="true" viewBox="0 0 15.001 14.898">
+                <style type="text/css">
+                  .st0 {
+                    fill: #333333;
+                  }
+
+                </style>
+                <g id="icon-12__close--default-Ebene_31">
+                  <g>
+                    <polygon points="14.949,13.326 13.403,14.898 7.5,9.33 1.624,14.898 0.052,13.326 5.645,7.475 0,1.598 1.572,0 
+        7.5,5.619 13.429,0 15.001,1.598 9.356,7.475"></polygon>
+                  </g>
+                </g>
+              </svg>
+            </button>
+            <h2 class="wb-m-lightbox-2__header wb-e-hdl-15">Warning</h2>
+            <p class="wb-e-pgph-2">Are you sure you want to delete <span style="font-weight: bolder">{{id}}</span>?</p>
+
+            <!-- CANCEL BUTTON -->
+            <div style="display: flex;justify-content: center">
+              <button type="button" class="wb-e-btn-2" (click)="modal.dismiss('Cross click')">
+                <svg class="wb-e-btn-2__icon" aria-hidden="true" viewBox="0 0 20 33.5">
+                  <style type="text/css">
+                    .st0 {
+                      fill: #333333;
+                    }
+
+                  </style>
+                  <g id="icon-4__arrow--default-Ebene_39">
+                    <g>
+                      <polygon points="0,0 5.163,0 19.992,16.81 5.343,33.5 0.12,33.5 12.968,16.81"></polygon>
+                    </g>
+                  </g>
+                </svg>
+                Cancel
+              </button>
+
+              <!-- DELETE BUTTON -->
+              <button type="button" class="wb-e-btn-1" (click)="deleteAppID(key, id); modal.dismiss('Cross click')">
+                <svg class="wb-e-btn-1__icon" aria-hidden="true" viewBox="0 0 20 33.5">
+                  <style type="text/css">
+                    .st0 {
+                      fill: #333333;
+                    }
+
+                  </style>
+                  <g id="icon-4__arrow--default-Ebene_39">
+                    <g>
+                      <polygon points="0,0 5.163,0 19.992,16.81 5.343,33.5 0.12,33.5 12.968,16.81"></polygon>
+                    </g>
+                  </g>
+                </svg>
+                Delete
+              </button>
+            </div>
+          </div>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+</div>

@@ -16,7 +16,7 @@
           <a routerLink="/status">Status</a>
         </li>
         <li *ngIf="loggedIn">
-          <a routerLink="/" (click)="removeDataFromLocalStorage()">Logout</a>
+          <a routerLink="/" (click)="logout()">Logout</a>
         </li>
         <li *ngIf="!loggedIn">
           <a routerLink="/" (click)="login()">Login</a>
@@ -40,7 +40,7 @@
           <a routerLink="/status">Status</a>
         </li>
         <li *ngIf="loggedIn">
-          <a routerLink="/" (click)="removeDataFromLocalStorage()">Logout</a>
+          <a routerLink="/" (click)="logout()">Logout</a>
         </li>
         <li *ngIf="!loggedIn">
           <a routerLink="/" (click)="login()">Login</a>

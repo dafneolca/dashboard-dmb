@@ -1,4 +1,62 @@
+<header></header>
 <div style="background-color:white">
-  <header></header>
-  <login></login>
+  <div class="main-container">
+    <div class="headline-and-copy">
+      <h1>
+        Welcome to the Dashboard App
+      </h1>
+      <p class="wb-e-pgph-2 intro-text">
+        This dashboard template is a tool for managing App IDs and App ID keys.<br><br>
+        Enter your App ID, API Key and chose an environment, to continue.
+      </p>
+      <form (ngSubmit)="login(loginData.value)" #loginData="ngForm" novalidate>
+        <div class="input-fields">
+          <input name="username" class="app-id-input" ngModel type="text" placeholder="Username" required
+            #username="ngModel" />
+          <span *ngIf="username.errors" style="color: #9f0002">*</span>
+          <br>
+          <input name="password" class="app-id-input" ngModel type="text" placeholder="Password" required
+            #password="ngModel" />
+          <span *ngIf="password.errors" style="color: #9f0002">*</span>
+
+          <div>
+            <button class="btn-dropdown" type="button" (click)="toggleDropDown()">
+              {{environment}}
+              <span *ngIf="!showDropDown">
+                <fa-icon [icon]="faChevronDown"></fa-icon>
+              </span>
+              <span *ngIf="showDropDown">
+                <fa-icon [icon]="faChevronDown" rotate="180"></fa-icon>
+              </span>
+            </button>
+            <div class="dropdown-list-div-mobile">
+              <ul class="dropdown-list" *ngIf="showDropDown">
+                <li (click)="thisValue('dev')">
+                  Development</li>
+                <li (click)="thisValue('int')">
+                  Integration</li>
+                <li (click)="thisValue('prod')">
+                  Production</li>
+              </ul>
+              <select style="display:none" name="env" ngModel #env="ngModel" required>
+                <option class="option-dropdown" #dev value="Development">Development</option>
+                <option #int value="Integration">Integration</option>
+                <option #prod value="Production">Production</option>
+              </select>
+            </div>
+          </div>
+          <span *ngIf="username.errors" style="color: #9f0002">*</span>
+          <span
+            *ngIf="(username.touched && username.errors)|| (password.touched && password.errors) || (env.touched && env.errors) || empty===true"
+            style="color: #9f0002; position: absolute; top: 185px">
+            *Required
+          </span>
+        </div>
+        <div class="submit-button">
+          <button type="submit" class="btn-submit-new-id">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
 </div>

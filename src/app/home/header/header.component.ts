@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IDService } from '../../services/id.service';
+
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -11,20 +13,23 @@ export class HeaderComponent implements OnInit {
   faBars = faBars;
 
   loggedIn: boolean;
-
-
-  apiKey: number;
+  user;
 
   displayNav: boolean = false;
 
-  constructor() { }
+  constructor(private idService: IDService) { }
 
   ngOnInit() {
-    // this.loggedIn = this.apiIdService.hasAdminRights;
+    this.loggedIn = this.idService.loggedIn();
+    this.user = this.idService.getUser();
   }
 
   toggleMenuView() {
     this.displayNav = !this.displayNav;
+  }
+
+  logout() {
+    this.idService.clearUser();
   }
 
 }
