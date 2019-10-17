@@ -124,17 +124,16 @@
           </tbody>
           </table>
         </div>
-
         <div *ngIf="(allData | userFilter: searchInput ).length === 0 && searchInput" class="no-results-msg">
           <p>No search results for key: {{searchInput}}</p>
         </div>
 
 
+
         <!-- TODO: ADD PAGINATION -->
-        <div style="text-align: center;" class="pagination-div">
-          <!-- <pagination-controls class="pagination" (pageChange)="p = $event" previousLabel="" nextLabel=""
-            autoHide="true" directionLinks="true" style="margin-top: 40px; padding-left:0;">
-          </pagination-controls> -->
+        <div class="pagination-div">
+          <mat-paginator [length]="100" [pageSize]="5">
+          </mat-paginator>
         </div>
 
         <!-- -------------------------------------- MODAL -------------------------------------->

@@ -40,6 +40,7 @@
 
 .headline-and-copy {
   padding-top: 10px;
+  background-color: white;
 }
 
 .button-container {
@@ -72,8 +73,9 @@
   top: 250px;
 }
 
-.mat-paginator-container {
-  justify-content: center !important;
+
+:host ::ng-deep.mat-paginator .mat-paginator-container {
+  justify-content: center;
 }
 
 thead th {
@@ -429,6 +431,7 @@ ul .ngx-pagination {
 
   .headline-and-copy {
     padding-top: 30px;
+    background-color: white !important;
   }
 
   .table-head {

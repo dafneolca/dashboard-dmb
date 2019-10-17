@@ -67,7 +67,7 @@ export class AdminComponent implements OnInit {
   // NEW DATA FROM BELOW
   users = [];
 
-  @ViewChild(MatPaginator, { static: false })
+  @ViewChild(MatPaginator, { static: true })
   paginator: MatPaginator;
 
   ngOnInit() {
